@@ -41,15 +41,17 @@ import {
         };
 
       case UPDATE_CART_QUANTITY:
+        let newCart = state.cart.map((product) => {
+          if (action._id === product._id) {
+            product.purchaseQuantity = action.purchaseQuantity;
+          }
+          return {...product};
+        })
+
         return {
           ...state,
           cartOpen: true,
-          cart: state.cart.map((product) => {
-            if (action._id === product._id) {
-              product.purchaseQuantity = action.purchaseQuantity;
-            }
-            return product;
-          }),
+          cart: [...newCart]
         };
 
       case REMOVE_FROM_CART:
