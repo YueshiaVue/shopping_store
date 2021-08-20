@@ -3,7 +3,6 @@ import { Link, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import {connect} from "react-redux";
 import Cart from '../components/Cart';
-import { useStoreContext } from '../utils/GlobalState';
 import {
   REMOVE_FROM_CART,
   UPDATE_CART_QUANTITY,

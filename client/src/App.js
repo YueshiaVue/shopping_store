@@ -16,7 +16,6 @@ import Signup from './pages/Signup';
 import Nav from './components/Nav';
 import { Provider } from 'react-redux'
 import store from "./store";
-import { StoreProvider } from './utils/GlobalState';
 import Success from './pages/Success';
 import OrderHistory from './pages/OrderHistory';
 
@@ -45,7 +44,6 @@ function App() {
       <Router>
         <div>
           <Provider store={store}>
-          <StoreProvider>
             <Nav />
             <Switch>
               <Route exact path="/" component={Home} />
@@ -56,7 +54,6 @@ function App() {
               <Route exact path="/products/:id" component={Detail} />
               <Route component={NoMatch} />
             </Switch>
-            </StoreProvider>
           </Provider>
         </div>
       </Router>
