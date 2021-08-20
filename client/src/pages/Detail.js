@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
-
+import {connect} from "react-redux";
 import Cart from '../components/Cart';
 import { useStoreContext } from '../utils/GlobalState';
 import {
@@ -14,15 +14,14 @@ import { QUERY_PRODUCTS } from '../utils/queries';
 import { idbPromise } from '../utils/helpers';
 import spinner from '../assets/spinner.gif';
 
-function Detail() {
-  const [state, dispatch] = useStoreContext();
+function Detail(props) {
   const { id } = useParams();
 
   const [currentProduct, setCurrentProduct] = useState({});
 
   const { loading, data } = useQuery(QUERY_PRODUCTS);
 
-  const { products, cart } = state;
+  const { products, cart, dispatch } = props;
 
   useEffect(() => {
     // already in global store
@@ -114,4 +113,8 @@ function Detail() {
   );
 }
 
-export default Detail;
+const mapStateToProps =(state) => {
+  return {...state.products};
+};
+
+export default connect( mapStateToProps )(Detail);

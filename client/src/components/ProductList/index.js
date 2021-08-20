@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react';
 import ProductItem from '../ProductItem';
-import { useStoreContext } from '../../utils/GlobalState';
+// import { useStoreContext } from '../../utils/GlobalState';
+import {connect} from "react-redux";
 import { UPDATE_PRODUCTS } from '../../utils/actions';
 import { useQuery } from '@apollo/client';
 import { QUERY_PRODUCTS } from '../../utils/queries';
 import { idbPromise } from '../../utils/helpers';
 import spinner from '../../assets/spinner.gif';
 
-function ProductList() {
-  const [state, dispatch] = useStoreContext();
+function ProductList(props) {
 
-  const { currentCategory } = state;
+  const { currentCategory, dispatch } = props;
 
   const { loading, data } = useQuery(QUERY_PRODUCTS);
 
@@ -35,10 +35,10 @@ function ProductList() {
 
   function filterProducts() {
     if (!currentCategory) {
-      return state.products;
+      return props.products;
     }
 
-    return state.products.filter(
+    return props.products.filter(
       (product) => product.category._id === currentCategory
     );
   }
@@ -46,7 +46,7 @@ function ProductList() {
   return (
     <div className="my-2">
       <h2>Our Products:</h2>
-      {state.products.length ? (
+      {props.products.length ? (
         <div className="flex-row">
           {filterProducts().map((product) => (
             <ProductItem
@@ -67,4 +67,8 @@ function ProductList() {
   );
 }
 
-export default ProductList;
+const mapStateToProps =(state) => {
+  return {...state.products};
+};
+
+export default connect( mapStateToProps )(ProductList);
