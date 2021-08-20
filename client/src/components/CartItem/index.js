@@ -3,9 +3,7 @@ import { REMOVE_FROM_CART, UPDATE_CART_QUANTITY } from "../../utils/actions";
 import { idbPromise } from "../../utils/helpers";
 import {connect} from "react-redux";
 
-
 const CartItem = ({ item, dispatch  }) => {
-
   const removeFromCart = item => {
     dispatch({
       type: REMOVE_FROM_CART,
@@ -17,6 +15,7 @@ const CartItem = ({ item, dispatch  }) => {
 
   const onChange = (e) => {
     const value = e.target.value;
+    console.log('onChange value',value)
     if (value === '0') {
       dispatch({
         type: REMOVE_FROM_CART,
@@ -25,6 +24,7 @@ const CartItem = ({ item, dispatch  }) => {
       idbPromise('cart', 'delete', { ...item });
 
     } else {
+      console.log('CartItem onChange ****',parseInt(value));
       dispatch({
         type: UPDATE_CART_QUANTITY,
         _id: item._id,
